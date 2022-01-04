@@ -37,9 +37,8 @@ def get_explicit_implicit_skills(corpus, similarity_mapping):
 
 def jobs_similarity_score_with_resume(resume_text, jobs_extracted_skills):
     jobs_score_with_resume = {}
-    print(resume_text)
+    # extract skills from resume
     resume_skills = [str(i).lower() for i in model.extract_skills(str(resume_text))]
-    print(resume_skills)
     for job in jobs_extracted_skills.keys():
         all_skills = list(jobs_extracted_skills[job]['explicit_skills']) + \
                      list(jobs_extracted_skills[job]['implicit_skills'])
