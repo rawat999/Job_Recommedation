@@ -12,7 +12,7 @@ model = ExtractFinalSkills()
 
 path = os.path.join(os.getcwd(), *('doc2vec', 'trained_d2v_model'))
 d2v = LoadDoc2VecModel(trained_model=path)
-mod = GetSimilarTopDocs(d2v_object=d2v)
+top_docs = GetSimilarTopDocs(d2v_object=d2v)
 
 
 def get_document_on_given_idx(corpus, idx):
@@ -37,12 +37,14 @@ def get_explicit_implicit_skills(corpus, similarity_mapping):
 
 def jobs_similarity_score_with_resume(resume_text, jobs_extracted_skills):
     jobs_score_with_resume = {}
-    resume = nltk.word_tokenize((str(resume_text).strip()).lower())
+    print(resume_text)
+    resume_skills = [str(i).lower() for i in model.extract_skills(str(resume_text))]
+    print(resume_skills)
     for job in jobs_extracted_skills.keys():
         all_skills = list(jobs_extracted_skills[job]['explicit_skills']) + \
                      list(jobs_extracted_skills[job]['implicit_skills'])
         concatenated_skills = [str(i).lower() for i in all_skills]
-        similarity_score_btw_resume_job = d2v.get_similarity(resume, concatenated_skills)
+        similarity_score_btw_resume_job = d2v.get_similarity(resume_skills, concatenated_skills)
         jobs_score_with_resume[job] = similarity_score_btw_resume_job
     jobs_score_with_resume = dict(sorted(jobs_score_with_resume.items(), key=lambda item: item[1], reverse=True))
     return jobs_score_with_resume
@@ -60,7 +62,7 @@ def find_top_jobs(job_description_file, resume_file, use_n_records=30):
     resume_text = read_pdf_into_txt(resume_file)
     df = pd.read_csv(job_description_file)
     corpus = df['Description'].apply(lambda x: [x])[:use_n_records]
-    similars = mod.get_all_similar_docs(corpus=corpus, topn=3)
+    similars = top_docs.get_all_similar_docs(corpus=corpus, topn=3)
     resume_job_scores = get_explicit_implicit_skills(corpus, similars)
     top_jobs = jobs_similarity_score_with_resume(resume_text=resume_text, jobs_extracted_skills=resume_job_scores)
     top = []
@@ -78,6 +80,6 @@ def find_top_jobs(job_description_file, resume_file, use_n_records=30):
 if __name__ == '__main__':
     jobs_file = os.path.join(os.getcwd(), 'd2vtrain.csv')
     resume_file_path = os.path.join(os.getcwd(), 'Prem_R_CV.pdf')
-    top_job = find_top_jobs(job_description_file=jobs_file, resume_file=resume_file_path, use_n_records=30)
+    top_job = find_top_jobs(job_description_file=jobs_file, resume_file=resume_file_path, use_n_records=10)
     print("\nSuccessfully got top jobs!\n")
     print(top_job.head(5))
