@@ -1,4 +1,4 @@
-# Job_Recommedation
+# Job_Recommendation
 NLP Based
 
 Follow steps:
