@@ -1,0 +1,1 @@
+from skill_extractor.pos_module.pos_tagging import POSExtractSkills

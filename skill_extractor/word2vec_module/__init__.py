@@ -1,0 +1,1 @@
+from skill_extractor.word2vec_module.wv import W2VExtractSkills

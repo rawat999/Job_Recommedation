@@ -1,0 +1,1 @@
+from skill_extractor.ner_module.ner import NERExtractSkills

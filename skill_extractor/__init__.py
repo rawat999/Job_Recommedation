@@ -1,0 +1,1 @@
+from skill_extractor.main import ExtractFinalSkills

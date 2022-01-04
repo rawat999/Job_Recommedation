@@ -1,0 +1,1 @@
+from skill_extractor.skills_dictionary.skills import DictExtractSkills
