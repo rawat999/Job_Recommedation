@@ -64,10 +64,12 @@ def find_top_jobs(job_description_file, resume_file, use_n_records=30):
     resume_job_scores = get_explicit_implicit_skills(corpus, similars)
     top_jobs = jobs_similarity_score_with_resume(resume_text=resume_text, jobs_extracted_skills=resume_job_scores)
     top = []
-    for i, job in enumerate(top_jobs):
-        top.append([df.loc[i]["Job ID"], df.loc[i]["Description"], top_jobs[job]])
-        i += 1
-        if i > 5:
+    j = 0
+    print(top_jobs)
+    for job in top_jobs:
+        top.append([df.loc[job]["Job ID"], df.loc[job]["Description"], top_jobs[job]])
+        j += 1
+        if j > 5:
             break
     top_job_df = pd.DataFrame(top, columns=['Job ID', 'Description', 'Similarity Score'])
     return top_job_df
@@ -76,6 +78,6 @@ def find_top_jobs(job_description_file, resume_file, use_n_records=30):
 if __name__ == '__main__':
     jobs_file = os.path.join(os.getcwd(), 'd2vtrain.csv')
     resume_file_path = os.path.join(os.getcwd(), 'Prem_R_CV.pdf')
-    top_job = find_top_jobs(job_description_file=jobs_file, resume_file=resume_file_path, use_n_records=5)
+    top_job = find_top_jobs(job_description_file=jobs_file, resume_file=resume_file_path, use_n_records=30)
     print("\nSuccessfully got top jobs!\n")
     print(top_job.head(5))
