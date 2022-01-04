@@ -66,7 +66,6 @@ def find_top_jobs(job_description_file, resume_file, use_n_records=30):
     top_jobs = jobs_similarity_score_with_resume(resume_text=resume_text, jobs_extracted_skills=resume_job_scores)
     top = []
     j = 0
-    print(top_jobs)
     for job in top_jobs:
         top.append([df.loc[job]["Job ID"], df.loc[job]["Description"], top_jobs[job]])
         j += 1
@@ -79,6 +78,7 @@ def find_top_jobs(job_description_file, resume_file, use_n_records=30):
 if __name__ == '__main__':
     jobs_file = os.path.join(os.getcwd(), 'd2vtrain.csv')
     resume_file_path = os.path.join(os.getcwd(), 'Prem_R_CV.pdf')
-    top_job = find_top_jobs(job_description_file=jobs_file, resume_file=resume_file_path, use_n_records=10)
+    top_job = find_top_jobs(job_description_file=jobs_file, resume_file=resume_file_path, use_n_records=30)
     print("\nSuccessfully got top jobs!\n")
+    print("\nTop 5 Jobs...")
     print(top_job.head(5))
