@@ -8,7 +8,7 @@ class NERExtractSkills:
             self.model_name = model
             self.nlp = spacy.load(model)
         else:
-            print("{} file not exist!".format(model))
+            raise "{} file not exist!".format(model)
 
     def extract_skills(self, text):
         document = self.nlp(text)

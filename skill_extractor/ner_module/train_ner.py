@@ -1,7 +1,7 @@
 import os
 import spacy
 from spacy.util import minibatch, compounding
-from skill_extractor.ner_module.nerdataprepare import NERData
+from nerdataprepare import NERData
 
 
 class NERModel:
@@ -60,10 +60,12 @@ class NERModel:
 
 
 if __name__ == '__main__':
-    datafile_path = os.path.join(os.getcwd(), *('skill_extractor', 'ner_module', 'skill_label_data.json'))
+    base_path = os.path.join(os.getcwd(), *('skill_extractor', 'ner_module'))
+    datafile_path = os.path.join(base_path, 'skill_label_data.json')
     model = NERModel(datafile=datafile_path)
     print("Model in training model...")
-    model.train()
+    model.train(epochs=20)
     print("Training Completed!")
-    model.save_model()
-    print("Saved NER model at path {}.".format(datafile_path))
+    model_path = os.path.join(base_path, 'ner_model')
+    model.save_model(model_path)
+    print("Saved NER model at path {}.".format(model_path))

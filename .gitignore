@@ -1,3 +1,10 @@
 .idea
 venv/
 doc2vec/trained_d2v_model
+*/__pycache__
+*/*/__pycache__
+*.zip
+*/*/ner_model/
+*/*/word2vec100D/
+
+
