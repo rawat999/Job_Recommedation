@@ -11,4 +11,4 @@ Follow steps:
 Now, ready to go...
 run command: `python .\main.py`
 
-Now we can change resume file `.pdf` or Job Discription file `d2vtrain.csv`
+Now we can change resume file `.pdf` or Jobs Description file `d2vtrain.csv`
